@@ -12,6 +12,7 @@ class Profile(models.Model):
     lastname = models.CharField(max_length=64)
     age = models.IntegerField()
 
+
     def __str__(self):
         return f"{self.user}"
     
@@ -27,13 +28,17 @@ class Product(models.Model):
     product_name = models.CharField(max_length=64)
     description = models.CharField(max_length=128)
     imege = models.URLField()
-    category = models.ForeignKey(Feature, on_delete=models.PROTECT, related_name="category")
-    marketeer = models.ForeignKey(User, on_delete=models.CASCADE, related_name="marketeer")
+    category = models.ForeignKey(Feature, on_delete=models.PROTECT,)
+    marketeer = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="products")
 
     def __str__(self):
         return f"{self.id}: {self.product_name}, {self.category}, {self.marketeer}"
 
 
-
+class Auction(models.Model):
+    lot = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="lot")
+    client = models.ForeignKey(User, on_delete=models.CASCADE, related_name="client")
+    price = models.IntegerField()
+    watcher = models.ManyToManyField(User, blank=True, related_name="auctions")
 
     
