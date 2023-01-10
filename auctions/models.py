@@ -37,7 +37,7 @@ class Product(models.Model):
 
 class Auction(models.Model):
     lot = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="lot")
-    client = models.ForeignKey(User, on_delete=models.CASCADE, related_name="client")
+    client = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True, related_name="client")
     price = models.IntegerField()
     watcher = models.ManyToManyField(User, blank=True, related_name="auctions")
 
